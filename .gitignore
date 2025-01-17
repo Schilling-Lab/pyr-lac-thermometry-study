@@ -1,0 +1,6 @@
+.DS_Store
+*.ipynb_checkpoints
+hypermri/docs/
+*.pyc
+hypermri/examples/
+hypermri/src/hypermri.egg-info/

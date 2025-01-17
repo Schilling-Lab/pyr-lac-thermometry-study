@@ -1,0 +1,101 @@
+{
+    "MGE": [
+        "<Bruker:MGE>"
+    ],
+    "umpireMGE": [
+        "<User:umpireMGE>"
+    ],
+    "FLASH": [
+        "<Bruker:FLASH>",
+        "<User:sliceprofile_FLASH>",
+        "<User:slicprof_inv_mk1>",
+        "<User:sliceprofile_FLASHv3>",
+        "<User:sliceprof_SP_FLASH>",
+        "<User:wgslic_prof_PRESS>",
+        "<User:wgslicprof_sLASER>",
+        "<User:wgslic_prof_PRESS3D>",
+        "<User:sliceprofSP_selFLASH>",
+        "<User:stock_FLASH>",
+        "<User:wgslicprof_sLASER_2>"
+    ],
+    "umpireFLASH": [
+        "<User:umpireFLASH>"
+    ],
+    "EPI": [
+        "<Bruker:EPI>",
+        "<User:lucaEPI>",
+        "<User:lucaEPIspiral>",
+        "<User:lucaEPIspiralTraj>"
+    ],
+    "CSI": [
+        "<Bruker:CSI>",
+        "<User:lucaCSIReco>",
+        "<User:lucaCSI>",
+        "<User:lucaCSI2>",
+        "<User:lucaCSI3>",
+        "<User:lucaCSI4>",
+        "<User:geoffCSI>",
+        "<User:csi_fix>"
+    ],
+    "RARE": [
+        "<Bruker:RARE>"
+    ],
+    "NSPECT": [
+        "<Bruker:NSPECT>"
+    ],
+    "CPMG": [
+        "<Bruker:CPMG>",
+        "<User:more_echoes_CPMG>"
+    ],
+    "Singlepulse": [
+        "<Bruker:SINGLEPULSE>"
+    ],
+    "BSSFP": [
+        "<Bruker:FISP>",
+        "<User:fisp_grad_1metab_CS>",
+        "<User:fisp_grad_1metab_CS2>",
+        "<User:fisp_gr_1_met_CS_me>",
+        "<User:jakob_fisp_me>",
+        "<User:fisp_me_backup>",
+        "<User:altPowRx_G_FISP>",
+        "<User:altPow_jgs_alt_FISP>",
+        "<User:altPowRx_G_FISP_luca>"
+    ],
+    "GeoffSlcSpec": [
+        "<User:geoffSlcSpec_12>"
+    ],
+    "gNSPECT_MS": [
+        "<User:gNSPECT_MS>"
+    ],
+    "FEXI": [
+        "<User:ath_FEXI_TMcompds_2>",
+        "<User:a_m_FEXI_2>",
+        "<User:jacFXSl_2repDum>",
+        "<User:jacFXSl_RDO>",
+        "<User:jacFXSl_2repDumNew>",
+        "<User:jFX_2VolUpd2>"
+    ],
+    "DTIEPI": [
+        "<Bruker:DtiEpi>"
+    ],
+    "IVRecovery": [
+        "<User:wg_IV_Recovery>",
+        "<User:wg_IVRecov_1IVT>"
+    ],
+    "PRESS": [
+        "<User:wg_multi_voxel_PRESS>",
+        "<User:wg_mv_press_reps>",
+        "<Bruker:PRESS>",
+        "<User:wg_mv_press_mk4>"
+    ],
+    "semiLASER": [
+        "<User:wg_sLASER>",
+        "<User:wg_mv_sLASER>",
+        "<User:wg_press_adiab_mk3>",
+        "<User:wg_press_adiab_mk4>",
+        "<User:wg_press_adiab_mk5>",
+        "<User:wg_press_adiab_mk6>",
+     "<User:wg_press_adiab_mk7>",
+        "<User:wg_mvslaser_self>"
+    ]
+}

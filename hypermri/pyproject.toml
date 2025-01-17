@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=67.5"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hypermri"
+version = "0.0.1"
+requires-python = ">=3.10.0"
+dependencies = [
+    "astropy",
+    "specutils",
+    "numpy >= 1.19.5",
+    "brukerapi@git+https://github.com/LucaNagel/brukerapi-python/#egg=read_in_complex_2dseq",
+    "matplotlib >= 3.5",
+    "nbclassic >= 0.5.3",
+    "notebook >= 6.5.0",
+    "jupyterlab >= 3.6.1",
+    "ipywidgets >= 8.0.4",
+    "scipy >= 1.9.1",
+    "ipympl >= 0.9.3",
+    "tqdm >= 4.65.0",
+    "joblib >= 1.2.0",
+    "pandas >= 1.5.3",
+    "seaborn >= 0.12.2",
+    "scikit-image >= 0.19.3",
+    "mpl-interactions@git+https://github.com/wgottwald/mpl-interactions/#egg=image_segmenter_overlayed_images",
+    "nmrglue >= 0.9",
+    "opencv-python >= 4.8.0.76"
+]
+
+readme = "README.md"
+license = {text="MIT License"}
+description = "Schilling-AG python module to work with Bruker MRI data"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: Apache License",
+    "Intended Audience :: Science/Research",
+]
+authors = [
+  {name="Andre Wendlinger", email="andre.wendlinger@tum.de"},
+  {name="Wolfgang Gottwald", email="wolfgang.gottwald@tum.de"},
+    {name="Luca Nagel", email="luca.nagel@tum.de"},
+    {name="Jakob Gaubatz", email="jakob.gaubatz@tum.de"},
+    {name="Miriam Kirst", email="miriam.kirst@tum.de"},
+    {name="Ben Georges Danzer", email="ben.danzer@tum.de"},
+    {name="Jacopo Frignani",email="jacopo.frignani@tum.de"}
+
+
+]
+
+[project.optional-dependencies]
+dev = [
+  "pip-tools >= 6.12.3",
+  "black >= 23.1.0",
+  "pytest >= 7.2.2",
+  "pytest-cov >= 4.0.0",
+  "tox >= 4.4.6",
+]
+
+[tool.pytest.ini_options]
+addopts = "--cov-report term-missing --cov=hypermri"
+testpaths = [
+  "tests",
+]
+
