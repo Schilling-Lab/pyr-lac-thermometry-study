@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import ipywidgets as widgets
 from ..utils.utils_logging import LOG_MODES, init_default_logger
+from scipy.stats import rayleigh
 
 logger = init_default_logger(__name__, fstring="%(name)s - %(funcName)s - %(message)s ")
 from astropy.modeling.core import Fittable1DModel
@@ -1819,3 +1820,79 @@ class squareLorentzian(Fittable1DModel):
             "fwhm": inputs_unit[self.inputs[0]],
             "amplitude": outputs_unit[self.outputs[0]],
         }
+
+
+
+def compute_snr_from_fit(raw_spec, fit_spectrums,bound=150):
+    """
+    Computes SNR for 6D raw spectra and respective fits as obtained from utils_fitting.fit_data_pseudo_inverse()
+
+    raw_spec: 6D numpy array, shape: (spectral, slices, x, y, repetitions, channels)
+    fit_spectrums: 6D numpy array, shape: (spectral, slices, x, y, repetitions, channels, metabolites)
+    bound: int, upper boundary for background region, assuming that background starts from index 0 to index bound, default is 150.
+
+
+    Returns
+    -------
+    peak_snrs: np.array, same shape as fit_spectrums. Contains SNR of metabolite peaks.
+    noise_floor: np.array, background noise levels, should be around 2, in line width magnitude poission distributed noise...
+    """
+    metabs = fit_spectrums.shape[-1]
+    spec, nslice, x_dim, y_dim, NR, nchan = raw_spec.shape
+
+    noise_floor = np.ones((1,nslice, x_dim, y_dim, NR, nchan))
+    for chan in range(nchan):
+        for slic in range(nslice):
+            for x in range(x_dim):
+                for y in range(y_dim):
+                    for n in range(NR):
+                        noise_spec = np.abs(((raw_spec[:, slic, x, y, n, chan] -
+                                              np.mean(
+                                                  np.real(raw_spec[0:bound, slic, x, y, n, chan]))) /
+                                             np.std(np.real(raw_spec[0:bound, slic, x, y, n, chan]))))[
+                                     0:bound]
+
+                        params = rayleigh.fit(noise_spec)
+                        scale = params[1]
+
+                        # Define x values for plotting the fitted distribution
+                        x_vals = np.linspace(0, max(noise_spec), 100)
+                        pdf_fitted = rayleigh.pdf(x_vals, loc=0, scale=scale)
+
+                        # Create a frozen Rayleigh distribution object with the fitted scale parameter
+                        fitted_rayleigh = rayleigh(scale=scale)
+
+                        # Get mean and standard deviation
+                        mean = fitted_rayleigh.mean()
+                        std_dev = fitted_rayleigh.std()
+                        noise_floor[0,slic, x, y, n, chan] = mean + std_dev
+
+    peak_snrs = np.ones((1,nslice, x_dim, y_dim, NR, nchan, metabs)) * np.nan
+    mean_noise = np.array([[[[[np.mean(np.real(raw_spec[0:bound, slic, x, y, rep, chan]))
+                               for chan in range(nchan)]
+                              for rep in range(NR)]
+                             for y in range(y_dim)]
+                            for x in range(x_dim)]
+                           for slic in range(nslice)])
+
+    std_noise = np.array([[[[[np.std(np.real(raw_spec[0:bound, slic, x, y, rep, chan]))
+                              for chan in range(nchan)]
+                             for rep in range(NR)]
+                            for y in range(y_dim)]
+                           for x in range(x_dim)]
+                          for slic in range(nslice)])
+
+    for chan in range(nchan):
+        for rep in range(NR):
+            for slic in range(nslice):
+                for x in range(x_dim):
+                    for y in range(y_dim):
+                        for peak in range(metabs):
+                            max_peak_fit_val = np.max(
+                                np.abs(fit_spectrums[:, slic, x, y, rep, chan, peak]))
+                            snr = np.round((max_peak_fit_val - mean_noise[slic, x, y, rep, chan]) / std_noise[
+                                slic, x, y, rep, chan], 2)
+                            peak_snrs[0,slic, x, y, rep, chan, peak] = snr
+
+    return peak_snrs, noise_floor
+
